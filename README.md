@@ -2,18 +2,24 @@
 
 The task of this project is to implement in Java a red-black tree data structure. However, the tree
 will be simplified – you only need to support insertion, not deletion.
+
 Specification
+
 The project must implement the following specification exactly, including all identifier names,
 method signatures, the presence or absence of exceptional behavior, etc. That being said,
 anything not clearly indicated by the UML diagram(s) or explicitly stated in the description is left
 up to your discretion. You may also add private helper methods or additional fields as necessary.
+
 Structure
+
 Note that a box with a dashed border over the top right of a class entity denotes a generic type
 parameter. In this case, the red-black tree class has a generic type named E that extends
 Comparable<E> – you may choose whether or not to make Node generic as well. The
 Comparable<T> interface is located in the java.lang package, so it is not necessary to
 import it. Finally, for this project you should locate your code in the default package.
+  
 Behavior
+
 insert should insert the given element into the tree at the correct position, and then rebalance
 the tree if necessary. The correct position is defined by the properties of a binary search tree,
 and the rebalancing procedure should enforce the properties of a red-black tree. Regarding input
@@ -21,6 +27,7 @@ validation, insert should immediately throw a NullPointerException with a descri
 message if the given element is null. Alternatively, if the given element is a duplicate of an
 element already in the tree, then insert should not insert the given element. The return value
 should indicate whether the given element was inserted into the tree or not.
+
 Two elements are considered duplicates iff (if and only if) they compare equal to each other using
 the compareTo method. Likewise, the ordering of any two elements for the purposes of
 insertion and rebalancing is given by the same method.
@@ -29,6 +36,7 @@ given object using the compareTo method of the object. This means that you shoul
 do object.compareTo(element) but never do element.compareTo(object). 
 However, if the given object is null, then contains should not throw an exception but rather
 should return false.
+
 toString should override the eponymous method of Object and return a string representing
 the pre-order traversal of this tree. The returned string should be the ordered concatenation of
 invoking the toString method of each element in the traversal, where every two adjacent
@@ -37,12 +45,16 @@ node, then it should be preceded by a single asterisk character (“*”) in the
 Otherwise, an element located in a black node should not be preceded by an asterisk. An
 example of the output is as follows (assuming that the elements are of type Integer):
 30 2 *5 47 *60
+
 It is entirely optional, but it may make your life easier to use a StringJoiner and/or to
 implement Node#toString() as well.
+
 The color field of the node class should be assigned and evaluated using the RED and BLACK
 constants of the enclosing tree class. This means that you should always do color = BLACK
 or if(color == RED) but never do color = true or if(!color).
+
 Main Class
+
 Along with the RedBlackTree class include another class that has a main function. You can name
 this class anything just clearly indicate the name in Readme File. This class will take two command
 line arguments. The first argument will be the input file name and second will be output file
