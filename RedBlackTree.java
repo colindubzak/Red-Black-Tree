@@ -4,6 +4,10 @@ public class RedBlackTree<E extends Comparable<E>> {
     Node<E> root;
 
     public boolean insert(E element) {
+        if (element == null) {
+            throw new NullPointerException("This parameter cannot be null");
+        }
+
         Node<E> temp = new Node(element);
         temp.color = false;
 
@@ -37,12 +41,22 @@ public class RedBlackTree<E extends Comparable<E>> {
                 return false;
             }
         }
-
+        insertFix(temp);
         return true;
     }
 
     public boolean contains(Comparable<E> object) {
-        return false;
+        if(object == null ) {
+            return false;
+        }
+        Node trav = root;
+        boolean found = false;
+
+        while(found == false) {
+            if(object.compareTo(trav.element) > 0) {
+
+            }
+        }
     }
 
     public String toString() {
