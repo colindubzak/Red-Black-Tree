@@ -49,18 +49,24 @@ public class RedBlackTree<E extends Comparable<E>> {
         if(object == null ) {
             return false;
         }
+        
         Node trav = root;
-        boolean found = false;
 
-        while(found == false) {
+        while(trav != null) {
             if(object.compareTo(trav.element) > 0) {
-
+                trav = trav.rightChild;
+            } else if(object.compareTo(trav.element) < 0) {
+                trav = trav.leftChild;
+            } else if(object.compareTo(trav.element) == 0) {
+                return true;
             }
-        }
+         }
+         
+         return false;
     }
 
     public String toString() {
-        String output = "toString method coming soon!";
+        String output = "toString method coming soon!";         //put traversal here
         return output;
     }
 
