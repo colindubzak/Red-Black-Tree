@@ -42,17 +42,66 @@ public class RedBlackTree<E extends Comparable<E>> {
     }
 
     public boolean contains(Comparable<E> object) {
-
+        return false;
     }
 
     public String toString() {
-
+        String output = "toString method coming soon!";
+        return output;
     }
 
     public void insertFix(Node cur) {
-        while(cur.parent.color == false) {
-            if (cur.parent == cur.parent.parent.leftChild) {
+        if (cur.parent.color == true) {
+            return;
+        }
 
+        Node A = cur;                                                   //A is current node
+        Node B = cur.parent;                                            //B is parent node
+        Node C = B.parent;                                              //C is grandparent node
+
+        if (C.rightChild == B) {                                        //B is a right child
+            if (C.leftChild.color == true || C.leftChild == null) {     //if B's sibling is black or null
+                if (B.rightChild == A) {
+                    C.rightChild = B.leftChild;
+                    B.leftChild = C;
+                    B.color = true;
+                    C.color = false;
+                } else if(B.leftChild == A) {
+                    A.rightChild = B;
+                    A.leftChild = C;
+                    B.leftChild = null;
+                    C.rightChild = null;
+                    C.color = false;
+                    A.color = true;
+                }
+            } else if(C.leftChild.color == false) {                     //if B's sibling is red
+                C.leftChild.color = true;
+                C.rightChild.color = true;
+                if(root != C) {
+                    C.color = false;
+                }
+            }
+        } else if(C.leftChild == B) {                                   //B is a left Child
+            if (C.rightChild.color == true || C.leftChild == null) {    //if B's sibling is black or null
+                if (B.leftChild == A) {
+                    C.leftChild = B.rightChild;
+                    B.rightChild = C;
+                    B.color = true;
+                    C.color = false;
+                } else if(B.rightChild == A) {
+                    A.rightChild = C;
+                    A.leftChild = B;
+                    B.rightChild = null;
+                    C.leftChild = null;
+                    C.color = false;
+                    A.color = true;
+                }
+            } else if(C.rightChild.color == false) {                     //B's sibling is red
+                C.leftChild.color = true;
+                C.rightChild.color = true;
+                if(root != C) {
+                    C.color = false;
+                }
             }
         }
     }
