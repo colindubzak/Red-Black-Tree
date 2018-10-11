@@ -1,7 +1,10 @@
+import java.lang.StringBuilder;
+
 public class RedBlackTree<E extends Comparable<E>> {
     private static boolean RED = false;
     private static boolean BLACK = true;
-    Node<E> root;
+    private Node<E> root;
+    private String traversal = new String();
 
     public boolean insert(E element) {
         if (element == null) {
@@ -9,10 +12,10 @@ public class RedBlackTree<E extends Comparable<E>> {
         }
 
         Node<E> temp = new Node(element);
-        temp.color = false;
+        temp.color = RED;
 
         if (root == null) {
-            temp.color = true;
+            temp.color = BLACK;
             root = temp;
             return true;
         }
@@ -49,8 +52,8 @@ public class RedBlackTree<E extends Comparable<E>> {
         if(object == null ) {
             return false;
         }
-        
-        Node trav = root;
+
+        Node<E> trav = root;
 
         while(trav != null) {
             if(object.compareTo(trav.element) > 0) {
@@ -60,18 +63,33 @@ public class RedBlackTree<E extends Comparable<E>> {
             } else if(object.compareTo(trav.element) == 0) {
                 return true;
             }
-         }
-         
-         return false;
+        }
+
+        return false;
     }
 
     public String toString() {
-        String output = "toString method coming soon!";         //put traversal here
+        String output = new String();
+        output = preOrder(root);
         return output;
     }
 
+    public String preOrder(Node node) {
+        if (node == null) {
+            return "";
+        }
+
+        traversal += node.toString();
+
+        preOrder(node.leftChild);
+
+        preOrder(node.rightChild);
+
+        return traversal;
+    }
+
     public void insertFix(Node cur) {
-        if (cur.parent.color == true) {
+        if (cur.parent.color == BLACK) {
             return;
         }
 
@@ -80,49 +98,70 @@ public class RedBlackTree<E extends Comparable<E>> {
         Node C = B.parent;                                              //C is grandparent node
 
         if (C.rightChild == B) {                                        //B is a right child
-            if (C.leftChild.color == true || C.leftChild == null) {     //if B's sibling is black or null
+            if (C.leftChild.color == BLACK || C.leftChild == null) {     //if B's sibling is black or null
                 if (B.rightChild == A) {
                     C.rightChild = B.leftChild;
                     B.leftChild = C;
-                    B.color = true;
-                    C.color = false;
+                    B.color = BLACK;
+                    C.color = RED;
                 } else if(B.leftChild == A) {
                     A.rightChild = B;
                     A.leftChild = C;
                     B.leftChild = null;
                     C.rightChild = null;
-                    C.color = false;
-                    A.color = true;
+                    C.color = RED;
+                    A.color = BLACK;
                 }
-            } else if(C.leftChild.color == false) {                     //if B's sibling is red
-                C.leftChild.color = true;
-                C.rightChild.color = true;
+            } else if(C.leftChild.color == RED) {                     //if B's sibling is red
+                C.leftChild.color = BLACK;
+                C.rightChild.color = BLACK;
                 if(root != C) {
-                    C.color = false;
+                    C.color = RED;
                 }
             }
         } else if(C.leftChild == B) {                                   //B is a left Child
-            if (C.rightChild.color == true || C.leftChild == null) {    //if B's sibling is black or null
+            if (C.rightChild.color == BLACK || C.leftChild == null) {    //if B's sibling is black or null
                 if (B.leftChild == A) {
                     C.leftChild = B.rightChild;
                     B.rightChild = C;
-                    B.color = true;
-                    C.color = false;
+                    B.color = BLACK;
+                    C.color = RED;
                 } else if(B.rightChild == A) {
                     A.rightChild = C;
                     A.leftChild = B;
                     B.rightChild = null;
                     C.leftChild = null;
-                    C.color = false;
-                    A.color = true;
+                    C.color = RED;
+                    A.color = BLACK;
                 }
-            } else if(C.rightChild.color == false) {                     //B's sibling is red
-                C.leftChild.color = true;
-                C.rightChild.color = true;
+            } else if(C.rightChild.color == RED) {                     //B's sibling is red
+                C.leftChild.color = BLACK;
+                C.rightChild.color = BLACK;
                 if(root != C) {
-                    C.color = false;
+                    C.color = RED;
                 }
             }
         }
+    }
+}
+
+class Node<E extends Comparable<E>> {
+    E element;
+    Node leftChild;
+    Node rightChild;
+    Node parent;
+    boolean color;
+
+    Node(E data) {
+        element = data;
+        leftChild = null;
+        rightChild = null;
+    }
+
+    public String toString() {
+        if (color == false) {
+            return " *" + element;
+        }
+        return " " + element;
     }
 }
